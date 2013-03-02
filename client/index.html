@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <style type="text/css">
+
+            html {
+                text-align: center;
+            }
+
+            body {
+                background: rgb(255, 255, 255);
+                color: rgb(64, 64, 64);
+                font-family: deja vu sans, tahoma, helvetica, arial, sans-serif;
+                margin: auto;
+                width: 640px;
+            }
+
+            canvas {
+                background: rgb(255, 255, 255);
+            }
+
+			form {
+				text-align: left;
+			}
+
+			label {
+				display: block;
+			}
+
+        </style>
+		<title>lunar lander</title>
+    </head>
+    <body>
+        <h1>lunar lander</h1>
+
+        <canvas id="ll" width="640" height="480">
+        </canvas>
+
+		<script src="./js/socket.io/socket.io.js"></script>
+		<script>
+			var canvas = document.getElementById('ll');
+			var context = canvas.getContext('2d');
+
+			var gamestate = [];
+
+			var styles = ['rgb(200, 0, 0)', 'rgb(0, 200, 0)', 'rgb(0, 0, 200)'];
+
+			(function() {
+				var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+					window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+				window.requestAnimationFrame = requestAnimationFrame;
+			})();
+
+			function loop() {
+				context.clearRect(
+					0, 0,
+					canvas.width, canvas.height);
+
+				gamestate.forEach(function(player, p) {
+					context.fillStyle = styles[p];
+					context.fillRect(player.x - 5, player.y - 5, 10, 10);
+
+					if (player.throttle) {
+						context.fillStyle = 'rgb(255, 100, 0)';
+						context.fillRect(player.x - 3, player.y + 8, 6, 7);
+					}
+				});
+
+				requestAnimationFrame(loop);
+			}
+
+			var socket = io.connect('http://localhost:8046/');
+
+			socket.on('connect', function () {
+				loop();
+
+				socket.on('state', function (msg) {
+					gamestate = JSON.parse(msg);
+					console.log(gamestate);
+				});
+			});
+
+			document.addEventListener('keydown', function (evt) {
+				evt.preventDefault();
+				socket.send(JSON.stringify({'throttle': true}));
+			});
+
+			document.addEventListener('keyup', function (evt) {
+				evt.preventDefault();
+				socket.send(JSON.stringify({'throttle': false}));
+			});
+
+			window.addEventListener('blur', function (evt) {
+				socket.send(JSON.stringify({'throttle': false}));
+			});
+		</script>
+    </body>
+</html>
