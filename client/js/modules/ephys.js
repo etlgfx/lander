@@ -115,6 +115,21 @@ define(function (require, exports, module) {
 				this.vel.x += fv[0] * ts / this.m;
 				this.vel.y += fv[1] * ts / this.m;
 
+				c.phys = {
+					rv: rv,
+					r: r,
+					f: f,
+					a1: a1,
+					a2: a2,
+					theta: theta,
+					cos: Math.cos(theta),
+					sin: Math.sin(theta),
+					tau: t,
+					I: I,
+					aa: aa,
+					fv: fv
+				};
+
 				//console.log(this.vel, this.w);
 				//vy += c.thrust * ts;
 			}

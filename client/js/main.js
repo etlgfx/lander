@@ -14,8 +14,8 @@ require(['ephys', 'egame'], function (ePhys, eGame) {
 
 	var g = new ePhys.ePhysGroup();
 	var mainModule = new ePhys.ePhysObj({x: 0, y: 10, m: 30});
-	var thruster1 = new ePhys.ePhysObj({x: -20, y: -10, m: 10, thrust: 500});
-	var thruster2 = new ePhys.ePhysObj({x: 20, y: -10, m: 10, thrust: 500});
+	var thruster1 = new ePhys.ePhysObj({x: -20, y: -5, m: 10, thrust: 1000});
+	var thruster2 = new ePhys.ePhysObj({x: 20, y: -5, m: 10, thrust: 1000});
 	var thruster3 = new ePhys.ePhysObj({x: 0, y: -10, m: 20, thrust: 6000});
 
 	g.appendChild(mainModule);
@@ -23,11 +23,11 @@ require(['ephys', 'egame'], function (ePhys, eGame) {
 	g.appendChild(thruster2);
 	g.appendChild(thruster3);
 
-	g.pos.x = 300;
-	g.pos.y = 300;
+	g.pos.x = 500;
+	g.pos.y = 500;
 	g.a = Math.PI;
 
-	console.log(g);
+	eGame.draw(g);
 
 	(function() {
 		var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
@@ -38,7 +38,6 @@ require(['ephys', 'egame'], function (ePhys, eGame) {
 	var looping = true;
 
 	window.addEventListener('keydown', function (evt) {
-
 		switch (evt.which) {
 			//case 38:
 			case 37:
@@ -60,8 +59,6 @@ require(['ephys', 'egame'], function (ePhys, eGame) {
 	}, true);
 
 	window.addEventListener('keyup', function (evt) {
-		evt.preventDefault();
-
 		switch (evt.which) {
 			//case 38:
 			case 37:
@@ -90,7 +87,6 @@ require(['ephys', 'egame'], function (ePhys, eGame) {
 		if (looping)
 			requestAnimationFrame(loop);
 	}
-
 
 	requestAnimationFrame(loop);
 });
