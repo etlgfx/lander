@@ -13,10 +13,10 @@ require(['ephys', 'egame'], function (ePhys, eGame) {
 	})
 
 	var g = new ePhys.ePhysGroup();
-	var mainModule = new ePhys.ePhysObj({x: 0, y: 10, m: 500});
-	var thruster1 = new ePhys.ePhysObj({x: -20, y: -10, m: 1, thrust: 500});
-	var thruster2 = new ePhys.ePhysObj({x: 20, y: -10, m: 1, thrust: 500});
-	var thruster3 = new ePhys.ePhysObj({x: 0, y: -10, m: 1, thrust: 6000});
+	var mainModule = new ePhys.ePhysObj({x: 0, y: 10, m: 30});
+	var thruster1 = new ePhys.ePhysObj({x: -20, y: -10, m: 10, thrust: 500});
+	var thruster2 = new ePhys.ePhysObj({x: 20, y: -10, m: 10, thrust: 500});
+	var thruster3 = new ePhys.ePhysObj({x: 0, y: -10, m: 20, thrust: 6000});
 
 	g.appendChild(mainModule);
 	g.appendChild(thruster1);
